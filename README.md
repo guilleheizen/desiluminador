@@ -14,15 +14,6 @@ Un desiluminador atrapa las luces de un lugar y las devuelve cuando hace falta. 
 
 Es una herramienta global. Se instala una vez y sirve desde cualquier repo, con cualquier agente que lea skills.
 
-## Vocabulario
-
-| Palabra | Qué es |
-|---|---|
-| **Luces** | Las informaciones. Viven en Jira, en repos, en Confluence, en internet. |
-| **Desiluminar** | Buscar las luces y cruzarlas. |
-| **Voces** | El reporte, en forma de historias. Claro y conciso. |
-| **Iluminar** | Guardar las voces en la memoria. La memoria es Confluence. |
-
 ## Cómo funciona
 
 El agente recibe una pregunta con sus fuentes y sigue el método de `SKILL.md`.
@@ -48,20 +39,6 @@ flowchart LR
 5. **Relato.** Escribe el reporte en la conversación con una estructura fija: qué es lo que se está mirando y una tabla de tickets; la operación completa de punta a punta, contada en presente desde quien la opera; cada ticket como una historia con el mecanismo detrás; y lo que hay que saber, separado en verificado, inferido, pendiente y encontrado en el camino. Sin nombres de archivos, líneas, funciones ni hashes: eso queda en la conversación para quien vaya a programar.
 
 6. **Guardado en Confluence.** Solo si se pide. Busca la página **Desiluminador**, la crea si no existe, y publica el relato como una página nueva, con la fecha y la pregunta en el título. Una página por pregunta; nunca sobreescribe.
-
-## Uso
-
-```
-desiluminar tenemos ~/backend/api, ~/backend/core y esta app; mirá PROJ-123; la app es un punto de cobro en efectivo
-```
-
-Sale el relato en la conversación. Las repreguntas siguen ahí, con todas las luces en mano.
-
-```
-iluminar
-```
-
-Guarda las últimas voces en Confluence.
 
 ## Instalación
 
@@ -94,20 +71,3 @@ ln -s ~/.agents/skills/desiluminador/explorador.md ~/.claude/agents/explorador.m
 En los agentes sin subagentes no hace falta nada: el mismo agente sigue `explorador.md` para cada repo, uno por vez.
 
 No hay config: la carpeta en Confluence se encuentra por su nombre y se crea si no existe.
-
-## Archivos
-
-```
-desiluminador/
-  SKILL.md               el método: desiluminar, voces, iluminar
-  explorador.md          el explorador de repos, de solo lectura
-  plantillas/encargo.md  lo que se le pide a cada explorador
-  plantillas/voces.md    la forma de las voces y sus reglas de escritura
-```
-
-## Qué no hace
-
-- No guarda nada entre preguntas ni deja archivos por su cuenta.
-- No modifica ningún repo.
-- No publica nada sin que se pida.
-- No pone en las voces lo que sirve para seguir programando. Eso se queda en la conversación.

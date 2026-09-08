@@ -1,6 +1,6 @@
 ---
 name: desiluminador
-description: Busca información en Jira y en repos y la cuenta como historias. Modos: desiluminar, iluminar.
+description: Busca información en Jira y en repos y la cuenta como historias. Se activa con "desiluminar" o "desiluminá", y con "iluminar" o "iluminá" para guardar el relato en Confluence. También cuando piden entender o explicar un epic, un ticket, un flujo o un incidente que cruza varios repos.
 ---
 
 # Desiluminador
@@ -14,10 +14,18 @@ Una pregunta entra con sus fuentes. Se buscan las luces, se cruzan, y se cuentan
 - **Voces**: el reporte, en forma de historias. Claro y conciso.
 - **Iluminar**: guardar las voces en la memoria. La memoria es Confluence.
 
-## Cómo se usa
+## Qué necesita
 
-- `desiluminar <pregunta>` — la pregunta trae las fuentes en el texto: claves o links de Jira, rutas de repos, y una línea de qué es el sistema. Ejemplo: `tenemos ~/backend/api, ~/backend/core y esta app; mirá PROJ-123; la app es un punto de cobro en efectivo`.
-- `iluminar` — guarda las últimas voces de la conversación en Confluence.
+Para **desiluminar**:
+
+- **Una pregunta.** Qué se quiere entender.
+- **Al menos una fuente de la gente.** Una clave o link de Jira, o una página de Confluence. Si no viene, pedirla.
+- **Los repos.** Las rutas, y el rol de cada uno si no es obvio por el nombre. Si no vienen, pedirlas. Si la conversación transcurre dentro de un repo, ese cuenta como uno.
+- **El sistema en una línea.** Si falta, se deduce del README de los repos y se dice como supuesto. No se pregunta.
+
+Todo lo que falte se pide en un solo mensaje, antes de empezar. No se pide lo que se puede deducir. Ejemplo de pedido completo: `tenemos ~/backend/api, ~/backend/core y esta app; mirá PROJ-123; la app es un punto de cobro en efectivo`.
+
+Para **iluminar** no hace falta nada: se usan las últimas voces de la conversación. Si no hay voces todavía, decirlo.
 
 Las repreguntas siguen en la misma conversación, con todas las luces en mano. No se vuelve a desiluminar salvo que la repregunta lo necesite.
 
