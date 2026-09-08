@@ -25,23 +25,29 @@ Es una herramienta global. Se instala una vez y sirve desde cualquier repo, con 
 
 ## Cómo funciona
 
+El agente recibe una pregunta con sus fuentes y sigue el método de `SKILL.md`.
+
 ```mermaid
 flowchart LR
-  P([Pregunta + fuentes]) --> D[Desiluminar]
-  J[(Jira)] --> D
-  R[(Repos)] --> D
-  D --> C[Cruce]
-  C --> V[Voces]
-  V -. si se pide .-> I[Iluminar]
-  I --> M[(Confluence)]
+  P([Pregunta + fuentes]) --> T[Leer tickets]
+  P --> E[Explorar repos]
+  T --> V[Verificar]
+  E --> V
+  V --> R[Relato]
+  R -. si se pide .-> G[Guardar en Confluence]
 ```
 
-1. **Encuadre.** La pregunta trae sus fuentes: claves de Jira, rutas de repos, una línea de qué es el sistema. Se identifica quién opera, porque las voces se cuentan desde esa persona.
-2. **Luces de la gente.** Se leen los tickets completos: el epic, sus hijos, los enlazados, los hermanos de otros clientes. Con descripciones y comentarios en orden, con autor. Nada se resume antes de leerlo: la luz clave suele ser una frase de un comentario.
-3. **Luces del código.** Un explorador por repo, de solo lectura. Cada uno sigue los flujos de punta a punta y devuelve lo que encontró con archivo y línea.
-4. **Cruce.** Cada afirmación que conecte un ticket con el código se verifica. Lo que se leyó es verificado. Lo que se dedujo es inferido. Lo que vive fuera de los repos se dice.
-5. **Voces.** La operación completa contada desde quien la usa, cada ticket como una historia con el mecanismo detrás, y lo que hay que saber. Sin archivos, sin líneas, sin funciones, sin hashes.
-6. **Iluminar.** Las voces van a Confluence, a la carpeta **Desiluminador**, una página por pregunta.
+1. **Encuadre.** De la pregunta saca qué se quiere saber, las claves de Jira, las rutas de los repos con el rol de cada uno (app, backend intermedio, core, portal) y una descripción del sistema en una línea. Si esa línea falta, la deduce del README de los repos y lo dice. Identifica a la persona que opera el sistema, porque el relato se cuenta desde ella.
+
+2. **Lectura de tickets.** Lee el ticket indicado con todos sus campos y comentarios. Si es un epic, busca sus hijos y los tickets enlazados. Si hay tickets del mismo flujo en otros clientes, también los trae. Vuelca todo a un archivo de trabajo, en orden cronológico y con autor, y lo lee completo, sin resumir. De ahí anota la cronología, quién hizo qué, qué se probó, qué quedó abierto, y las frases textuales que habrá que buscar en el código: códigos de error, etiquetas de estado, nombres de campos, valores extraños.
+
+3. **Exploración de repos.** Lanza un explorador por repo, en paralelo si el agente tiene subagentes; si no, explora los repos de a uno. Cada explorador recibe un encargo con la pregunta, el rol del repo, los tickets en una línea, los términos textuales y preguntas específicas. Solo lee. Devuelve un reporte con archivo y línea: mapa de módulos, cada flujo paso a paso, estados y transiciones, integraciones con otros sistemas, commits recientes y cambios sin commitear, y hallazgos marcados como leídos o deducidos.
+
+4. **Verificación.** El agente principal comprueba con grep cada afirmación que vaya a conectar un ticket con el código. Clasifica cada dato: verificado si lo leyó en el código, inferido si lo dedujo de datos o de comportamiento, no verificable si vive en una librería o en un sistema fuera de los repos. Concilia contradicciones: un ticket que dice que algo se corrigió y el código no lo contiene, un valor que QA ve y el código explica.
+
+5. **Relato.** Escribe el reporte en la conversación con una estructura fija: qué es lo que se está mirando y una tabla de tickets; la operación completa de punta a punta, contada en presente desde quien la opera; cada ticket como una historia con el mecanismo detrás; y lo que hay que saber, separado en verificado, inferido, pendiente y encontrado en el camino. Sin nombres de archivos, líneas, funciones ni hashes: eso queda en la conversación para quien vaya a programar.
+
+6. **Guardado en Confluence.** Solo si se pide. Busca la página **Desiluminador**, la crea si no existe, y publica el relato como una página nueva, con la fecha y la pregunta en el título. Una página por pregunta; nunca sobreescribe.
 
 ## Uso
 
